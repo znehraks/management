@@ -15,14 +15,14 @@ import {
 const styles = theme => ({
   root: {
     width: "100%",
-    marginTop: theme.spacing.unit * 3,
+    marginTop: theme.spacing(3),
     overflowX: "auto"
   },
   table: {
     minWidth: 1080
   },
   progress: {
-    margin: theme.spacing.unit * 2
+    margin: theme.spacing(2)
   }
 });
 
@@ -34,13 +34,17 @@ class App extends Component {
 
   componentDidMount() {
     this.timer = setInterval(this.progress,20);
-    // this.callApi()
-    //   .then(res => this.setState({ customers: res }))
-    //   .catch(err => console.log(err));
+    this.callApi()
+      .then(res => this.setState({ customers: res }))
+      .catch(err => console.log(err));
+  }
+
+  componentWillUnmount(){
+    clearInterval(this.timer);
   }
 
   callApi = async () => {
-    const response = await fetch("/api/customers");
+    const response = await fetch('/api/customers');
     const body = await response.json();
     return body;
   };
